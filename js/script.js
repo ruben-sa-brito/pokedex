@@ -26,15 +26,13 @@ const renderPokemon = async (pokemon) => {
     pokemonNumber.innerHTML = data.id;
     pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
     idPokemon = data.id;
-    console.log(idPokemon)
     
 
 }
 
 form.addEventListener('submit', (event)=>{
     event.preventDefault();
-
-    renderPokemon(input.value);
+    renderPokemon(input.value.toLowerCase());
     input.value = '';
     
 })
@@ -43,7 +41,7 @@ btnSearch.addEventListener('click', (event)=>{
     event.preventDefault();
     
     if (input.value.length > 0) { 
-        renderPokemon(input.value);
+        renderPokemon(input.value.toLowerCase());
         input.value = '';
     }
     
