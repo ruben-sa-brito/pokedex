@@ -26,6 +26,24 @@ main {
     max-width: 425px;
 }
 
+.light {
+    position: absolute;
+    display: none;
+    left: 0;
+    bottom: 86%;
+    left: 13%;
+    width: 4.1em;
+    height: 4em;
+    border-radius: 5em 5em 5em 5em;
+    
+  }
+.red-light {
+    box-shadow: 0px 0px 40px 10px rgb(223, 4, 4);
+  }
+.red {
+    background-color:rgba(255, 0, 0, 0.349);
+  }
+
 .pokemon__image{
     position: absolute;
     left: 0;

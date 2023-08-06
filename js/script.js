@@ -7,6 +7,8 @@ const btnSearch= document.querySelector('.btn-search');
 const btnNext = document.querySelector('.btn-next');
 const btnPrev = document.querySelector('.btn-prev');
 const btnInfo = document.querySelector('.btn-info');
+const light = document.querySelector('.light');
+var turnoff = setTimeout(show, 3300);
 var dict = { 'normal':'normal','fighting':'lutador', 'flying':'voador', 'poison':'veneno', 'ground':'terrestre','rock':'pedra', 'bug':'inseto', 'ghost':'fantasma', 'steel':'aço', 'fire':'fogo', 'water':'água', 'grass':'planta', 'electric':'eletrico','psychic':'psíquico', 'ice':'gelo', 'dragon':'dragão', 'dark':'sombrio', 'fairy':'fada' }
 var synth = window.speechSynthesis;
 var idPokemon = 0;
@@ -16,23 +18,34 @@ const fetchPokemon = async (pokemon) => {
     
     const APIResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
 
-    const data = await APIResponse.json();
-    
-
-    return data;
+    if (APIResponse.status === 200) {
+        const data = await APIResponse.json();
+        return data;
+      }
     
 }
 
 const renderPokemon = async (pokemon) => {
 
     const data = await fetchPokemon(pokemon);
-    pokemonName.innerHTML = data.name;
-    pokemonNumber.innerHTML = data.id;
-    pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
-    idPokemon = data.id;
+
+    if (data) {
+        pokemonImage.style.display = 'block';
+        pokemonName.innerHTML = data.name;
+        pokemonNumber.innerHTML = data.id;
+        pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
+        idPokemon = data.id;
+    } else {
+        pokemonImage.style.display = 'none';
+        pokemonName.innerHTML = "Not found :'(";
+        pokemonNumber.innerHTML = '';
+        idPokemon = 0;
+    }
     
 
 }
+
+renderPokemon(1)
 
 form.addEventListener('submit', (event)=>{
     event.preventDefault();
@@ -63,11 +76,18 @@ btnPrev.addEventListener('click',()=>{
    
 })
 
+function show() {
+    light.style.display='none';
+  }
+
 btnInfo.addEventListener('click', async () =>{
+    synth.cancel();
+    clearTimeout(turnoff);
     const data = await fetchPokemon(idPokemon);
     var name = data.name +' um pokemon do tipo '+ dict[`${data.types[0].type.name}`];
-    
     const toSpeak = new SpeechSynthesisUtterance(name);
-    
+    light.style.display='block';
+    turnoff = setTimeout(show, 3300);
     synth.speak(toSpeak);
+
 })
