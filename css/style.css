@@ -71,7 +71,7 @@ main {
 
 .buttons {
     position: absolute;
-    bottom: 10%;
+    bottom: 19%;
     left: 50%;
     width: 65%;
     transform: translate(-57%, 0);
@@ -99,6 +99,18 @@ main {
     box-shadow: inset -4px 4px 0 #222;
     font-size: 0.9rem;
     
+}
+
+.btn-info {
+    position: absolute;
+    background-color: red;
+    bottom: -120%;
+    left: 25%;
+    display: inline-block;
+}
+
+.btn-info:hover{
+    background-color: rgba(255, 0, 0, 0.479);
 }
 
 @media  (max-width: 410px) {

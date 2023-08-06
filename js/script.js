@@ -6,6 +6,9 @@ const input = document.querySelector('.input__search');
 const btnSearch= document.querySelector('.btn-search');
 const btnNext = document.querySelector('.btn-next');
 const btnPrev = document.querySelector('.btn-prev');
+const btnInfo = document.querySelector('.btn-info');
+var dict = { 'normal':'normal','fighting':'lutador', 'flying':'voador', 'poison':'veneno', 'ground':'terrestre','rock':'pedra', 'bug':'inseto', 'ghost':'fantasma', 'steel':'aço', 'fire':'fogo', 'water':'água', 'grass':'planta', 'electric':'eletrico','psychic':'psíquico', 'ice':'gelo', 'dragon':'dragão', 'dark':'sombrio', 'fairy':'fada' }
+var synth = window.speechSynthesis;
 var idPokemon = 0;
 
 
@@ -14,6 +17,7 @@ const fetchPokemon = async (pokemon) => {
     const APIResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
 
     const data = await APIResponse.json();
+    
 
     return data;
     
@@ -48,7 +52,6 @@ btnSearch.addEventListener('click', (event)=>{
 })
 
 btnNext.addEventListener('click',()=>{
-    console.log(idPokemon + 1)
     renderPokemon(idPokemon + 1)
    
 })
@@ -58,4 +61,13 @@ btnPrev.addEventListener('click',()=>{
         renderPokemon(idPokemon - 1)
     }
    
+})
+
+btnInfo.addEventListener('click', async () =>{
+    const data = await fetchPokemon(idPokemon);
+    var name = data.name +' um pokemon do tipo '+ dict[`${data.types[0].type.name}`];
+    
+    const toSpeak = new SpeechSynthesisUtterance(name);
+    
+    synth.speak(toSpeak);
 })
