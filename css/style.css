@@ -71,7 +71,7 @@ main {
 
 .buttons {
     position: absolute;
-    bottom: 19%;
+    bottom: 18%;
     left: 50%;
     width: 65%;
     transform: translate(-57%, 0);
@@ -106,7 +106,7 @@ main {
     background-color: red;
     bottom: -120%;
     left: 25%;
-    display: inline-block;
+    max-width: 145px;
 }
 
 .btn-info:hover{
