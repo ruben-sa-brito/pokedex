@@ -8,7 +8,6 @@ const btnNext = document.querySelector('.btn-next');
 const btnPrev = document.querySelector('.btn-prev');
 const btnInfo = document.querySelector('.btn-info');
 const light = document.querySelector('.light');
-let turnoff = setTimeout(show, 3300);
 let dict = { 'normal':'normal','fighting':'lutador', 'flying':'voador', 'poison':'veneno', 'ground':'terrestre','rock':'pedra', 'bug':'inseto', 'ghost':'fantasma', 'steel':'aço', 'fire':'fogo', 'water':'água', 'grass':'planta', 'electric':'eletrico','psychic':'psíquico', 'ice':'gelo', 'dragon':'dragão', 'dark':'sombrio', 'fairy':'fada' }
 let synth = window.speechSynthesis;
 let idPokemon = 0;
@@ -40,8 +39,7 @@ const renderPokemon = async (pokemon) => {
         pokemonName.innerHTML = "Not found :'(";
         pokemonNumber.innerHTML = '';
         idPokemon = 0;
-    }
-    
+    }    
 
 }
 
@@ -76,18 +74,15 @@ btnPrev.addEventListener('click',()=>{
    
 })
 
-function show() {
-    light.style.display='none';
-  }
-
 btnInfo.addEventListener('click', async () =>{
-    synth.cancel();
-    clearTimeout(turnoff);
+    synth.cancel()
     const data = await fetchPokemon(idPokemon);
     let name = data.name +' um pokemon do tipo '+ dict[`${data.types[0].type.name}`];
     const toSpeak = new SpeechSynthesisUtterance(name);
-    light.style.display='block';
-    turnoff = setTimeout(show, 3300);
     synth.speak(toSpeak);
-
+    light.style.display='block';
+    setTimeout(()=> {
+        light.style.display='none';
+      }, 3100);
+      
 })
